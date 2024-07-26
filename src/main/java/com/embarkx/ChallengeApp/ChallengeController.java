@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/challenges")
+
 public class ChallengeController {
     private final ChallengeService challengeService;
 
@@ -20,13 +23,13 @@ public class ChallengeController {
         this.challengeService = challengeService; // Spring Boot manages this class dependency and initializes it
     }
 
-    @GetMapping("/challenges")
+    @GetMapping //("/challenges")
     public ResponseEntity<List<Challenge>> getAllChallenges() {
         List<Challenge> challenges = challengeService.getAllChallenges();
         return new ResponseEntity<>(challenges, HttpStatus.OK);
     }
 
-    @PostMapping("/challenges")
+    @PostMapping //("/challenges")
     public ResponseEntity<String> addChallenge(@RequestBody Challenge challenge) {
         boolean isChallengeAdded = challengeService.addChallenge(challenge);
 
@@ -37,7 +40,7 @@ public class ChallengeController {
         }
     }
 
-    @GetMapping("/challenges/{month}")
+    @GetMapping("/{month}")
     public ResponseEntity<Challenge> getAChallenges(@PathVariable String month) {
         Challenge challenge = challengeService.getChallenges(month);
 
@@ -48,7 +51,7 @@ public class ChallengeController {
         }
     }
 
-    @PutMapping("/challenges/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateChallenge(@PathVariable Long id, @RequestBody Challenge updatedChallenge){
         boolean isChallengeUpdated = challengeService.updateChallenge(id, updatedChallenge);
 
@@ -59,7 +62,7 @@ public class ChallengeController {
         }
     }
 
-    @DeleteMapping("challenges/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteChallenge(@PathVariable Long id){
         boolean isChallengeDeleted = challengeService.deleteChallenge(id);
 
